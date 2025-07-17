@@ -473,37 +473,39 @@ export default function ResumeBuilder() {
         
         .timeline {
             position: relative;
-            padding-left: 32px;
+            padding-left: 28px;
         }
         
         .timeline::before {
             content: '';
             position: absolute;
-            left: 8px;
-            top: 0;
+            left: 6px;
+            top: 9px;
             bottom: 0;
-            width: 2px;
-            background: #e5e7eb;
+            width: 0px;
+            border-left: 2px dashed #d1d5db; /* nét đứt */
+            z-index: 0;
         }
-        
+
         .timeline-item {
             position: relative;
-            margin-bottom: 32px;
-            padding-bottom: 24px;
-            page-break-inside: avoid; /* Prevent individual job entry from breaking */
+            margin-bottom: 24px;
+            break-inside: avoid;
+            page-break-inside: avoid;
         }
-        
+
         .timeline-item::before {
             content: '';
             position: absolute;
             left: -28px;
-            top: 4px;
+            top: 10px;
             width: 12px;
             height: 12px;
             background: #2563eb;
             border-radius: 50%;
             border: 3px solid white;
             box-shadow: 0 0 0 2px #2563eb;
+            z-index: 1;
         }
         
         .job-header {
