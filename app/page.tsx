@@ -19,14 +19,12 @@ import {
   GraduationCap,
   Zap,
   Briefcase,
-  ChevronUp,
   Lightbulb,
   ShieldCheck,
   Code,
   Mail,
   Phone,
   Globe,
-  Github,
 } from "lucide-react"
 // Removed: import html2pdf from "html2pdf.js"
 
@@ -308,7 +306,7 @@ export default function ResumeBuilder() {
             line-height: 1.6;
             color: #374151;
             background-color: #f9fafb;
-            padding: 40px 20px;
+            padding: 32px 16px; /* Condensed from 40px 20px */
         }
         
         .container {
@@ -322,7 +320,7 @@ export default function ResumeBuilder() {
         
         .header {
             background: white;
-            padding: 40px;
+            padding: 32px; /* Condensed from 40px */
             border-bottom: 1px solid #e5e7eb;
         }
         
@@ -351,7 +349,7 @@ export default function ResumeBuilder() {
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-bottom: 8px;
+            margin-bottom: 6px; /* Condensed from 8px */
             font-size: 1rem;
             color: #4b5563;
         }
@@ -363,11 +361,11 @@ export default function ResumeBuilder() {
         }
         
         .content {
-            padding: 40px;
+            padding: 32px; /* Condensed from 40px */
         }
         
         .section {
-            margin-bottom: 40px;
+            margin-bottom: 32px; /* Condensed from 40px */
             page-break-inside: avoid; /* Prevent section from breaking */
         }
         
@@ -378,7 +376,7 @@ export default function ResumeBuilder() {
             font-size: 1.125rem;
             font-weight: 700;
             color: #111827;
-            margin-bottom: 10px;
+            margin-bottom: 8px; /* Condensed from 10px */
             text-transform: uppercase;
             letter-spacing: 0.05em;
             
@@ -398,14 +396,14 @@ export default function ResumeBuilder() {
         .skills-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 6px; /* Condensed from 8px */
             margin-bottom: 24px;
         }
         
         .skill-tag {
             background: #dbeafe;
             color: #1d4ed8;
-            padding: 6px 16px;
+            padding: 5px 13px; /* Condensed from 6px 16px */
             border-radius: 20px;
             font-size: 0.875rem;
             font-weight: 500;
@@ -416,8 +414,8 @@ export default function ResumeBuilder() {
             font-size: 1rem;
             line-height: 1.7;
             color: #374151;
-            margin-bottom: 32px;
-            padding-bottom:10px;
+            margin-bottom: 26px; /* Condensed from 32px */
+            padding-bottom:8px; /* Condensed from 10px */
             border-bottom: 1px solid #f3f4f6;
         }
 
@@ -425,7 +423,7 @@ export default function ResumeBuilder() {
             display: grid;
             flex-wrap: wrap;
             grid-template-columns: 1fr 1fr;
-            gap: 40px;
+            gap: 32px; /* Condensed from 40px */
             margin-bottom: 20px;
         }
 
@@ -443,7 +441,7 @@ export default function ResumeBuilder() {
         .experience-tag {
             background: #f3f4f6;
             color: #374151;
-            padding: 4px 12px;
+            padding: 3px 10px; /* Condensed from 4px 12px */
             border-radius: 16px;
             font-size: 0.75rem;
             font-weight: 500;
@@ -458,7 +456,7 @@ export default function ResumeBuilder() {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 24px;
+            margin-bottom: 19px; /* Condensed from 24px */
             padding-bottom: 0px;
         }
         
@@ -473,13 +471,13 @@ export default function ResumeBuilder() {
         
         .timeline {
             position: relative;
-            padding-left: 28px;
+            padding-left: 22px; /* Condensed from 28px */
         }
         
         .timeline::before {
             content: '';
             position: absolute;
-            left: 6px;
+            left: 5px; /* Condensed from 6px */
             top: 9px;
             bottom: 0;
             width: 0px;
@@ -489,7 +487,7 @@ export default function ResumeBuilder() {
 
         .timeline-item {
             position: relative;
-            margin-bottom: 24px;
+            margin-bottom: 19px; /* Condensed from 24px */
             break-inside: avoid;
             page-break-inside: avoid;
         }
@@ -497,7 +495,7 @@ export default function ResumeBuilder() {
         .timeline-item::before {
             content: '';
             position: absolute;
-            left: -26px;
+            left: -21px; /* Condensed from -26px */
             top: 9px;
             width: 10px;
             height: 10px;
@@ -512,7 +510,7 @@ export default function ResumeBuilder() {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 8px;
+            margin-bottom: 6px; /* Condensed from 8px */
         }
         
         .job-title {
@@ -547,8 +545,8 @@ export default function ResumeBuilder() {
         
         .job-description li {
             position: relative;
-            padding-left: 20px;
-            margin-bottom: 8px;
+            padding-left: 16px; /* Condensed from 20px */
+            margin-bottom: 6px; /* Condensed from 8px */
             color: #4b5563;
             line-height: 1.6;
         }
@@ -599,8 +597,8 @@ export default function ResumeBuilder() {
         }
 
         .education-item {
-            margin-bottom: 20px;
-            padding-bottom: 16px;
+            margin-bottom: 16px; /* Condensed from 20px */
+            padding-bottom: 13px; /* Condensed from 16px */
             border-bottom: 1px solid #f3f4f6;
         }
 
@@ -629,8 +627,8 @@ export default function ResumeBuilder() {
         }
 
         .award-item {
-            margin-bottom: 20px;
-            padding-bottom: 16px;
+            margin-bottom: 16px; /* Condensed from 20px */
+            padding-bottom: 13px; /* Condensed from 16px */
             border-bottom: 1px solid #f3f4f6;
             page-break-inside: avoid; /* Prevent individual award entry from breaking */
         }
@@ -643,7 +641,7 @@ export default function ResumeBuilder() {
           display: flex;
           justify-content: space-between;
           align-items: flex-start;
-          margin-bottom: 8px;
+          margin-bottom: 6px; /* Condensed from 8px */
         }
 
         .award-title {
@@ -682,7 +680,7 @@ export default function ResumeBuilder() {
         .header-main-content {
             display: flex;
             flex-wrap: wrap; /* Allow wrapping on smaller screens */
-            gap: 20px; /* Space between columns */
+            gap: 16px; /* Condensed from 20px */
             justify-content: space-between;
         }
 
@@ -713,14 +711,14 @@ export default function ResumeBuilder() {
             .timeline-item::before {
                 content: '';
                 position: absolute;
-                left: -27px;
+                left: -23px;
                 top: 9px;
                 width: 10px;
                 height: 10px;
                 background: #2563eb; /* dùng màu đậm để in ra rõ hơn */
                 border-radius: 50%;
                 border: 2px solid white;
-                box-shadow: 0 0 0 2px #2563eb;
+                box-shadow: 0 0 0 1px #2563eb;
                 z-index: 1;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
@@ -743,10 +741,10 @@ export default function ResumeBuilder() {
                 width: 100%;
             }
             .header, .content {
-                padding: 20px; /* Adjust padding for print */
+                padding: 16px; /* Condensed from 20px */
             }
             .section {
-                margin-bottom: 40px; /* Adjust section spacing for print */
+                margin-bottom: 16px; /* Condensed from 20px */
                 page-break-after: auto; /* Force new page after each major section */
             }
             .section:last-child {
@@ -769,7 +767,7 @@ export default function ResumeBuilder() {
                 display: flex;
                 flex-direction: row;
                 flex-wrap: wrap;
-                gap: 40px;
+                gap: 32px; /* Condensed from 40px */
                 page-break-inside: avoid;
             }
 
@@ -783,7 +781,7 @@ export default function ResumeBuilder() {
             .header-main-content {
               display: grid !important;
               grid-template-columns: 1fr 1fr;
-              gap: 20px;
+              gap: 16px; /* Condensed from 20px */
               page-break-inside: avoid;
               break-inside: avoid;
             }
@@ -798,7 +796,7 @@ export default function ResumeBuilder() {
               grid-template-columns: 1fr auto;
               align-items: start;
               margin-bottom: 8px;
-              gap: 16px;
+              gap: 13px; /* Condensed from 16px */
               page-break-inside: avoid;
               break-inside: avoid;
             }
@@ -846,11 +844,16 @@ export default function ResumeBuilder() {
             <div class="header-content">
                 <div class="header-left">
                     <h1 class="name">${resumeData.personalInfo.fullName}</h1>
-                    
+                    ${
+                        verifiedBadgeText
+                        ? `
                     <div class="verified-badge">
                         ${renderLucideIcon(ShieldCheck, "verified-icon", 16)}
                         ${verifiedBadgeText}
                     </div>
+                     `
+                        : ""
+                    }
                     
                     <div class="header-main-content">
                         <div class="left-column">
@@ -920,7 +923,7 @@ export default function ResumeBuilder() {
             <div class="section">
                 <h2 class="section-title">
                     ${renderLucideIcon(User, "section-icon", 18)}
-                    Bio
+                    Summary
                 </h2>
                 <p class="bio-text">${resumeData.professionalSummary}</p>
             </div>
