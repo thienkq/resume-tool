@@ -483,7 +483,7 @@ export default function ResumeBuilder() {
             top: 9px;
             bottom: 0;
             width: 0px;
-            border-left: 2px dashed #d1d5db; /* nét đứt */
+            border-left: 2px dashed #9ca3af; /* nét đứt */
             z-index: 0;
         }
 
@@ -497,13 +497,13 @@ export default function ResumeBuilder() {
         .timeline-item::before {
             content: '';
             position: absolute;
-            left: -28px;
+            left: -26px;
             top: 9px;
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             background: #2563eb;
             border-radius: 50%;
-            border: 3px solid white;
+            border: 2px solid white;
             box-shadow: 0 0 0 2px #2563eb;
             z-index: 1;
         }
@@ -710,6 +710,21 @@ export default function ResumeBuilder() {
 
         /* Print-specific styles for A4 and page breaks */
         @media print {
+            .timeline-item::before {
+                content: '';
+                position: absolute;
+                left: -27px;
+                top: 9px;
+                width: 10px;
+                height: 10px;
+                background: #2563eb; /* dùng màu đậm để in ra rõ hơn */
+                border-radius: 50%;
+                border: 2px solid white;
+                box-shadow: 0 0 0 2px #2563eb;
+                z-index: 1;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
             @page {
                 size: A4;
                 margin: 10mm; /* Adjust margins as needed */
@@ -787,7 +802,6 @@ export default function ResumeBuilder() {
               page-break-inside: avoid;
               break-inside: avoid;
             }
-
         }
 
         @media (max-width: 768px) {
