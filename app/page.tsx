@@ -398,11 +398,14 @@ export default function ResumeBuilder() {
             line-height: 1.7;
             color: #374151;
             margin-bottom: 32px;
+            padding-bottom:10px;
+            border-bottom: 1px solid #f3f4f6;
         }
 
         .two-column {
             display: grid;
             flex-wrap: wrap;
+            grid-template-columns: 1fr 1fr;
             gap: 40px;
             margin-bottom: 20px;
         }
@@ -649,6 +652,12 @@ export default function ResumeBuilder() {
             color: #4b5563;
             line-height: 1.5;
         }
+
+        .section-skill {
+            page-break-before: always;
+            break-before: page; /* For better browser support */
+            border-bottom: 1px solid #f3f4f6;
+        }
         
         /* Print-specific styles for A4 and page breaks */
         @media print {
@@ -679,6 +688,12 @@ export default function ResumeBuilder() {
             .section:last-child {
                 page-break-after: auto; /* No page break after the very last section */
             }
+
+            .section-skill {
+                 page-break-before: always;
+                 break-before: page; /* For better browser support */
+                 border-bottom: 1px solid #f3f4f6;
+            }
             
             /* Ensure images are visible in print */
             img {
@@ -686,12 +701,19 @@ export default function ResumeBuilder() {
                 max-width: 100%;
                 height: auto;
             }
-            .two-column {
+
+           .two-column {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 40px;
                 page-break-inside: avoid;
             }
+
             .two-column > div {
-                break-inside: avoid;
+                flex: 1 1 48%;
                 page-break-inside: avoid;
+                break-inside: avoid;
             }
         }
 
@@ -884,7 +906,7 @@ export default function ResumeBuilder() {
             ${
               resumeData.skills.some((skill) => skill.name.trim())
                 ? `
-            <div class="section">
+            <div class="section section-skill">
                 <h2 class="section-title">
                     ${renderLucideIcon(Lightbulb, "section-icon", 18)}
                     Skills
