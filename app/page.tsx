@@ -498,7 +498,7 @@ export default function ResumeBuilder() {
             content: '';
             position: absolute;
             left: -28px;
-            top: 10px;
+            top: 9px;
             width: 12px;
             height: 12px;
             background: #2563eb;
