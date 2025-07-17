@@ -729,7 +729,7 @@ export default function ResumeBuilder() {
                 padding: 20px; /* Adjust padding for print */
             }
             .section {
-                margin-bottom: 20px; /* Adjust section spacing for print */
+                margin-bottom: 40px; /* Adjust section spacing for print */
                 page-break-after: auto; /* Force new page after each major section */
             }
             .section:last-child {
@@ -737,9 +737,8 @@ export default function ResumeBuilder() {
             }
 
             .section-skill {
-                 page-break-before: always;
+                page-break-before: always;
                 break-before: page; /* For better browser support */
-                 
             }
             
             /* Ensure images are visible in print */
