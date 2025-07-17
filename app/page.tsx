@@ -1,12 +1,29 @@
 "use client"
 
-import { useState } from "react"
+import type React from "react"
+
+import { useState, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Plus, Minus, Download } from "lucide-react"
+import {
+  Plus,
+  Minus,
+  Download,
+  MapPin,
+  User,
+  GraduationCap,
+  Zap,
+  Briefcase,
+  ChevronUp,
+  Lightbulb,
+  CalendarDays,
+  ShieldCheck,
+  Code,
+} from "lucide-react"
+// Removed: import html2pdf from "html2pdf.js"
 
 interface Experience {
   id: string
@@ -22,14 +39,6 @@ interface Education {
   institution: string
   degree: string
   year: string
-}
-
-interface Award {
-  id: string
-  title: string
-  issuer: string
-  year: string
-  description: string
 }
 
 interface Skill {
@@ -50,24 +59,90 @@ interface ResumeData {
   experience: Experience[]
   skills: Skill[]
   education: Education[]
-  awards: Award[]
+  awards: any[] // Renamed Award to any to avoid redeclaration
 }
 
 export default function ResumeBuilder() {
   const [resumeData, setResumeData] = useState<ResumeData>({
     personalInfo: {
-      fullName: "",
-      email: "",
-      phone: "",
-      location: "",
-      website: "",
+      fullName: "Jane Doe",
+      email: "jane.doe@example.com",
+      phone: "+1 (123) 456-7890",
+      location: "San Francisco, CA",
+      website: "https://janedoe.dev",
     },
-    professionalSummary: "",
-    experience: [{ id: "1", company: "", position: "", duration: "", description: "", technologies: "" }],
-    skills: [{ id: "1", name: "", years: "" }],
-    education: [{ id: "1", institution: "", degree: "", year: "" }],
-    awards: [{ id: "1", title: "", issuer: "", year: "", description: "" }],
+    professionalSummary:
+      "Highly motivated and results-oriented Software Engineer with 5+ years of experience in developing and deploying scalable web applications. Proficient in full-stack development, cloud platforms, and agile methodologies. Passionate about building innovative solutions and contributing to high-performing teams.",
+    experience: [
+      {
+        id: "1",
+        company: "Tech Solutions Inc.",
+        position: "Senior Software Engineer",
+        duration: "Jan 2022 - Present",
+        description: `• Led the development of a new microservices architecture, improving system scalability by 40% and reducing latency by 25%.
+• Designed and implemented RESTful APIs using Node.js and Express, serving over 1 million daily requests.
+• Mentored junior developers and conducted code reviews, ensuring high code quality and adherence to best practices.
+• Collaborated with product managers and UX designers to translate requirements into technical specifications.`,
+        technologies: "Node.js, React, TypeScript, AWS, Docker, Kubernetes, PostgreSQL",
+      },
+      {
+        id: "2",
+        company: "Innovate Corp.",
+        position: "Software Engineer",
+        duration: "Jun 2019 - Dec 2021",
+        description: `• Developed and maintained features for a customer-facing web application using React and Redux.
+• Optimized database queries and improved application performance, leading to a 15% reduction in load times.
+• Participated in daily stand-ups, sprint planning, and retrospective meetings in an Agile environment.
+• Wrote comprehensive unit and integration tests to ensure software reliability.`,
+        technologies: "React, Redux, Python, Django, MySQL, Git",
+      },
+    ],
+    skills: [
+      { id: "1", name: "JavaScript", years: "5" },
+      { id: "2", name: "TypeScript", years: "3" },
+      { id: "3", name: "React", years: "4" },
+      { id: "4", name: "Node.js", years: "4" },
+      { id: "5", name: "Python", years: "5" },
+      { id: "6", name: "AWS", years: "3" },
+      { id: "7", name: "Docker", years: "2" },
+      { id: "8", name: "PostgreSQL", years: "4" },
+      { id: "9", name: "Git", years: "5" },
+      { id: "10", name: "Agile Methodologies", years: "5" },
+    ],
+    education: [
+      {
+        id: "1",
+        institution: "University of California, Berkeley",
+        degree: "Master of Science in Computer Science",
+        year: "2019",
+      },
+      {
+        id: "2",
+        institution: "University of California, Berkeley",
+        degree: "Bachelor of Science in Computer Science",
+        year: "2017",
+      },
+    ],
+    awards: [
+      {
+        id: "1",
+        title: "AWS Certified Solutions Architect - Associate",
+        issuer: "Amazon Web Services",
+        year: "2023",
+        description:
+          "Validated expertise in designing and deploying scalable, highly available, and fault-tolerant systems on AWS.",
+      },
+      {
+        id: "2",
+        title: "Dean's List",
+        issuer: "University of California, Berkeley",
+        year: "2015, 2016, 2017",
+        description: "Recognized for outstanding academic achievement.",
+      },
+    ],
   })
+
+  const previewRef = useRef<HTMLDivElement>(null)
 
   const addExperience = () => {
     const newExp: Experience = {
@@ -125,34 +200,6 @@ export default function ResumeBuilder() {
     }))
   }
 
-  const addAward = () => {
-    const newAward: Award = {
-      id: Date.now().toString(),
-      title: "",
-      issuer: "",
-      year: "",
-      description: "",
-    }
-    setResumeData((prev) => ({
-      ...prev,
-      awards: [...prev.awards, newAward],
-    }))
-  }
-
-  const removeAward = (id: string) => {
-    setResumeData((prev) => ({
-      ...prev,
-      awards: prev.awards.filter((award) => award.id !== id),
-    }))
-  }
-
-  const updateAward = (id: string, field: keyof Award, value: string) => {
-    setResumeData((prev) => ({
-      ...prev,
-      awards: prev.awards.map((award) => (award.id === id ? { ...award, [field]: value } : award)),
-    }))
-  }
-
   const addSkill = () => {
     setResumeData((prev) => ({
       ...prev,
@@ -172,6 +219,58 @@ export default function ResumeBuilder() {
       ...prev,
       skills: prev.skills.map((skill) => (skill.id === id ? { ...skill, [field]: value } : skill)),
     }))
+  }
+
+  const addAward = () => {
+    const newAward: any = {
+      id: Date.now().toString(),
+      title: "",
+      issuer: "",
+      year: "",
+      description: "",
+    }
+    setResumeData((prev) => ({
+      ...prev,
+      awards: [...prev.awards, newAward],
+    }))
+  }
+
+  const removeAward = (id: string) => {
+    setResumeData((prev) => ({
+      ...prev,
+      awards: prev.awards.filter((award) => award.id !== id),
+    }))
+  }
+
+  const updateAward = (id: string, field: string, value: string) => {
+    setResumeData((prev) => ({
+      ...prev,
+      awards: prev.awards.map((award) => (award.id === id ? { ...award, [field]: value } : award)),
+    }))
+  }
+
+  // Update the renderLucideIcon function to include ShieldCheck path data
+  // And ensure CheckCircle path data is correct (it was previously incorrect, pointing to CheckCircle but using a different path)
+  const renderLucideIcon = (IconComponent: React.ElementType, className: string, size = 18) => {
+    const iconMap: { [key: string]: string } = {
+      CheckCircle: `<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>`, // Corrected CheckCircle path
+      ShieldCheck: `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path><path d="m9 12 2 2 4-4"></path>`, // Added ShieldCheck path
+      MapPin: `<path d="M12 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"></path><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"></path>`,
+      Code: `<polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline>`,
+      Briefcase: `<rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>`,
+      User: `<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle>`,
+      GraduationCap: `<path d="M21.43 10.92V8.5L12 2 2.57 8.5v2.42"></path><path d="M2.57 12.42v3.91L12 22l9.43-5.67v-3.91"></path><path d="M12 2v20"></path>`,
+      Zap: `<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>`,
+      ChevronUp: `<path d="m18 15-6-6-6 6"></path>`,
+      Lightbulb: `<path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path>`,
+      CalendarDays: `<path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path><path d="M8 14h.01"></path><path d="M12 14h.01"></path><path d="M16 14h.01"></path><path d="M8 18h.01"></path><path d="M12 18h.01"></path><path d="M16 18h.01"></path>`,
+    }
+
+    const pathData = iconMap[IconComponent.displayName || ""] || "" // Fallback to empty string if not found
+
+    return `<svg class="${className}" width="${size}" height="${size}" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              ${pathData}
+            </svg>`
   }
 
   const generateResumeHTML = () => {
@@ -227,17 +326,11 @@ export default function ResumeBuilder() {
             gap: 6px;
             background: #dcfce7;
             color: #166534;
-            padding: 4px 12px;
+            padding: 4px 4px;
             border-radius: 20px;
             font-size: 0.875rem;
             font-weight: 500;
             margin-bottom: 20px;
-        }
-        
-        .verified-icon {
-            width: 16px;
-            height: 16px;
-            fill: currentColor;
         }
         
         .info-item {
@@ -261,6 +354,7 @@ export default function ResumeBuilder() {
         
         .section {
             margin-bottom: 40px;
+            page-break-inside: avoid; /* Prevent section from breaking */
         }
         
         .section-title {
@@ -305,12 +399,17 @@ export default function ResumeBuilder() {
             color: #374151;
             margin-bottom: 32px;
         }
-        
+
         .two-column {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            flex-wrap: wrap;
             gap: 40px;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
+        }
+
+        .two-column > div {
+            flex: 1 1 48%; /* Allow wrapping */
+            box-sizing: border-box;
         }
         
         .experience-tags {
@@ -370,6 +469,7 @@ export default function ResumeBuilder() {
             position: relative;
             margin-bottom: 32px;
             padding-bottom: 24px;
+            page-break-inside: avoid; /* Prevent individual job entry from breaking */
         }
         
         .timeline-item::before {
@@ -509,6 +609,7 @@ export default function ResumeBuilder() {
             margin-bottom: 20px;
             padding-bottom: 16px;
             border-bottom: 1px solid #f3f4f6;
+            page-break-inside: avoid; /* Prevent individual award entry from breaking */
         }
 
         .award-item:last-child {
@@ -549,6 +650,51 @@ export default function ResumeBuilder() {
             line-height: 1.5;
         }
         
+        /* Print-specific styles for A4 and page breaks */
+        @media print {
+            @page {
+                size: A4;
+                margin: 10mm; /* Adjust margins as needed */
+            }
+            body {
+                padding: 0;
+                margin: 0;
+                box-shadow: none;
+                background-color: white;
+            }
+            .container {
+                box-shadow: none;
+                border-radius: 0;
+                margin: 0;
+                max-width: none;
+                width: 100%;
+            }
+            .header, .content {
+                padding: 20px; /* Adjust padding for print */
+            }
+            .section {
+                margin-bottom: 20px; /* Adjust section spacing for print */
+                page-break-after: auto; /* Force new page after each major section */
+            }
+            .section:last-child {
+                page-break-after: auto; /* No page break after the very last section */
+            }
+            
+            /* Ensure images are visible in print */
+            img {
+                display: block;
+                max-width: 100%;
+                height: auto;
+            }
+            .two-column {
+                page-break-inside: avoid;
+            }
+            .two-column > div {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+        }
+
         @media (max-width: 768px) {
             .two-column {
                 grid-template-columns: 1fr;
@@ -588,16 +734,12 @@ export default function ResumeBuilder() {
                     <h1 class="name">${resumeData.personalInfo.fullName}</h1>
                     
                     <div class="verified-badge">
-                        <svg class="verified-icon" viewBox="0 0 20 20" fill="currentColor">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
+                        ${renderLucideIcon(ShieldCheck, "verified-icon", 16)}
                         Verified Expert in Engineering
                     </div>
                     
                     <div class="info-item">
-                        <svg class="info-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
-                        </svg>
+                        ${renderLucideIcon(Code, "info-icon", 18)}
                         <span>Software Developer</span>
                     </div>
                     
@@ -605,10 +747,7 @@ export default function ResumeBuilder() {
                       resumeData.personalInfo.location
                         ? `
                     <div class="info-item">
-                        <svg class="info-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                        </svg>
+                        ${renderLucideIcon(MapPin, "info-icon", 18)}
                         <span>${resumeData.personalInfo.location}</span>
                     </div>
                     `
@@ -616,16 +755,14 @@ export default function ResumeBuilder() {
                     }
                     
                     <div class="info-item">
-                        <svg class="info-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3a2 2 0 012-2h4a2 2 0 012 2v4m-6 0V6a2 2 0 012-2h4a2 2 0 012 2v1m-6 0h8m-8 0H6a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V9a2 2 0 00-2-2h-2"/>
-                        </svg>
+                        ${renderLucideIcon(CalendarDays, "info-icon", 18)}
                         <span>CoderPush member since June 25, 2018</span>
                     </div>
                 </div>
                 
                 <div class="header-right">
                     <div class="company-logo">
-                        <img src="/coderpush-logo.png" alt="Company Logo" style="height: 40px;">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQ7oW6XvR5vf46b40SEVtBgza4AV_5X1LqRA&s" alt="Company Logo" style="height: 70px;">
                     </div>
                 </div>
             </div>
@@ -637,9 +774,7 @@ export default function ResumeBuilder() {
                 ? `
             <div class="section">
                 <h2 class="section-title">
-                    <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                    </svg>
+                    ${renderLucideIcon(User, "section-icon", 18)}
                     Bio
                 </h2>
                 <p class="bio-text">${resumeData.professionalSummary}</p>
@@ -648,14 +783,10 @@ export default function ResumeBuilder() {
                 : ""
             }
             
-            <div class="two-column">
+            <div class="two-column section">
                 <div>
                     <h2 class="section-title">
-                        <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 14l9-5-9-5-9 5 9 5z"/>
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/>
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/>
-                        </svg>
+                        ${renderLucideIcon(GraduationCap, "section-icon", 18)}
                         Education
                     </h2>
                     ${resumeData.education
@@ -674,9 +805,7 @@ export default function ResumeBuilder() {
                 
                 <div>
                     <h2 class="section-title">
-                        <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                        </svg>
+                        ${renderLucideIcon(Zap, "section-icon", 18)}
                         Experience
                     </h2>
                     <div class="experience-tags">
@@ -696,17 +825,13 @@ export default function ResumeBuilder() {
             ${
               resumeData.experience.some((exp) => exp.company && exp.position)
                 ? `
-            <div class="work-experience">
+            <div class="work-experience section">
                 <div class="work-header">
                     <h2 class="work-title">
-                        <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-6m-8 0H3m2 0h6M9 7h6m-6 4h6m-6 4h6"/>
-                        </svg>
+                        ${renderLucideIcon(Briefcase, "section-icon", 18)}
                         Work Experience
                     </h2>
-                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 15l7-7 7 7"/>
-                    </svg>
+                    ${renderLucideIcon(ChevronUp, "", 20)}
                 </div>
                 
                 <div class="timeline">
@@ -761,9 +886,7 @@ export default function ResumeBuilder() {
                 ? `
             <div class="section">
                 <h2 class="section-title">
-                    <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
-                    </svg>
+                    ${renderLucideIcon(Lightbulb, "section-icon", 18)}
                     Skills
                 </h2>
                 <div class="skills-container">
@@ -786,9 +909,7 @@ export default function ResumeBuilder() {
                 ? `
             <div class="section">
                 <h2 class="section-title">
-                    <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
-                    </svg>
+                    ${renderLucideIcon(Lightbulb, "section-icon", 18)}
                     Awards & Certificates
                 </h2>
                 ${resumeData.awards
@@ -819,17 +940,18 @@ export default function ResumeBuilder() {
     `.trim()
   }
 
-  const downloadHTML = () => {
-    const htmlContent = generateResumeHTML()
-    const blob = new Blob([htmlContent], { type: "text/html" })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement("a")
-    a.href = url
-    a.download = `${resumeData.personalInfo.fullName || "resume"}.html`
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
-    URL.revokeObjectURL(url)
+  // Removed: const exportToPDF = () => { ... }
+
+  const exportToPDFWithPrint = () => {
+    const printWindow = window.open("", "_blank")
+    if (printWindow) {
+      printWindow.document.write(generateResumeHTML())
+      printWindow.document.close()
+      printWindow.focus()
+      printWindow.print()
+      // Optional: Close the window after printing, though browsers often handle this.
+      // setTimeout(() => printWindow.close(), 100);
+    }
   }
 
   return (
@@ -843,10 +965,23 @@ export default function ResumeBuilder() {
                 <h1 className="text-2xl font-bold text-gray-900">Resume Builder</h1>
                 <p className="text-gray-600">Create a beautiful, professional resume</p>
               </div>
-              <Button onClick={downloadHTML} size="sm" className="flex items-center gap-2">
-                <Download className="w-4 h-4" />
-                Download
-              </Button>
+              <div className="flex gap-2">
+                {" "}
+                {/* Group buttons */}
+                {/* Removed: <Button onClick={exportToPDF} size="sm" className="flex items-center gap-2">
+                  <Download className="w-4 h-4" />
+                  Download (html2pdf)
+                </Button> */}
+                <Button
+                  onClick={exportToPDFWithPrint}
+                  size="sm"
+                  variant="outline"
+                  className="flex items-center gap-2 bg-transparent"
+                >
+                  <Download className="w-4 h-4" />
+                  Export to PDF (Print)
+                </Button>
+              </div>
             </div>
 
             <div className="space-y-6">
@@ -1207,9 +1342,18 @@ export default function ResumeBuilder() {
         <div className="w-3/5 bg-gray-50 overflow-y-auto">
           <div className="p-6">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Preview</h2>
-            <div className="bg-white rounded-lg shadow-sm border">
-              <div className="w-full min-h-[800px]" dangerouslySetInnerHTML={{ __html: generateResumeHTML() }} />
-            </div>
+            <div
+              className="bg-white rounded-lg shadow-sm border overflow-hidden"
+              ref={previewRef}
+              style={{
+                width: "210mm", // A4 width
+                minHeight: "297mm", // A4 height
+                margin: "0 auto",
+                border: "1px solid #e0e0e0",
+                boxShadow: "0 0 8px rgba(0,0,0,0.1)",
+              }}
+              dangerouslySetInnerHTML={{ __html: generateResumeHTML() }}
+            />
           </div>
         </div>
       </div>
