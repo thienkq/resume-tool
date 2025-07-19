@@ -366,7 +366,7 @@ export default function ResumeBuilder() {
         
         .section {
             margin-bottom: 32px; /* Condensed from 40px */
-            page-break-inside: avoid; /* Prevent section from breaking */
+            page-break-inside: auto; /* Prevent section from breaking */
         }
         
         .section-title {
@@ -488,8 +488,8 @@ export default function ResumeBuilder() {
         .timeline-item {
             position: relative;
             margin-bottom: 19px; /* Condensed from 24px */
-            break-inside: avoid;
-            page-break-inside: avoid;
+            break-inside: auto;
+            page-break-inside: auto;
         }
 
         .timeline-item::before {
@@ -630,7 +630,7 @@ export default function ResumeBuilder() {
             margin-bottom: 16px; /* Condensed from 20px */
             padding-bottom: 13px; /* Condensed from 16px */
             border-bottom: 1px solid #f3f4f6;
-            page-break-inside: avoid; /* Prevent individual award entry from breaking */
+            page-break-inside: auto; /* Prevent individual award entry from breaking */
         }
 
         .award-item:last-child {
@@ -672,8 +672,7 @@ export default function ResumeBuilder() {
         }
 
         .section-skill {
-            page-break-before: always;
-            break-before: page; /* For better browser support */
+            
         }
         
         /* New styles for the two-column header layout */
@@ -752,8 +751,9 @@ export default function ResumeBuilder() {
             }
 
             .section-skill {
-                page-break-before: always;
-                break-before: page; /* For better browser support */
+                page-break-before: auto;
+                margin-top:50px;
+                margin-bottom:50px;
             }
             
             /* Ensure images are visible in print */
@@ -768,12 +768,12 @@ export default function ResumeBuilder() {
                 flex-direction: row;
                 flex-wrap: wrap;
                 gap: 32px; /* Condensed from 40px */
-                page-break-inside: avoid;
+                page-break-inside: auto;
             }
 
             .two-column > div {
                 flex: 1 1 48%;
-                page-break-inside: avoid;
+                page-break-inside: auto;
                 break-inside: avoid;
             }
 
@@ -782,7 +782,7 @@ export default function ResumeBuilder() {
               display: grid !important;
               grid-template-columns: 1fr 1fr;
               gap: 16px; /* Condensed from 20px */
-              page-break-inside: avoid;
+              page-break-inside: auto;
               break-inside: avoid;
             }
 
@@ -797,7 +797,7 @@ export default function ResumeBuilder() {
               align-items: start;
               margin-bottom: 8px;
               gap: 13px; /* Condensed from 16px */
-              page-break-inside: avoid;
+              page-break-inside: auto;
               break-inside: avoid;
             }
         }
