@@ -16,8 +16,7 @@ import {
   Download,
   MapPin,
   User,
-  GraduationCap,
-  Zap,
+  Sparkles,
   Briefcase,
   Lightbulb,
   ShieldCheck,
@@ -25,6 +24,8 @@ import {
   Mail,
   Phone,
   Globe,
+  Award,
+  Zap,
 } from "lucide-react"
 // Removed: import html2pdf from "html2pdf.js"
 
@@ -276,6 +277,8 @@ export default function ResumeBuilder() {
       Phone: `<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-0.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-0.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>`,
       Globe: `<circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path>`,
       Github: `<path d="M15 22v-4a4.8 4.8 0 0 0-1-3.2c3.5-.4 7.1-1.7 7.1-7.5 0-1.6-.6-3-1.6-4-.1-.5-.8-1.9 0-2.4 0 0 1.2-.4 4 1.5 0 0 2.3-.6 4.5-.6.3 0 .7 0 1 0 2.2 0 4.5.6 4.5.6 0 .5-.7 1.9 0 2.4 1 1 1.6 2.4 1.6 4 0 5.8-3.6 7.1-7.1 7.5.4.3.8 1 1 2.2v4"></path><path d="M9 19c-2.3 0-4.5-1.3-4.5-4.5 0-3.2 2.2-4.5 4.5-4.5s4.5 1.3 4.5 4.5c0 3.2-2.2 4.5-4.5 4.5z"></path>`,
+      Sparkles: `<path d="M12 3v18"></path><path d="M3 12h18"></path><path d="m18 6-6 6-6-6"></path><path d="m6 18 6-6 6 6"></path>`, // New icon for Skills
+      Award: `<circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>`, // New icon for Awards
     }
 
     const pathData = iconMap[IconComponent.displayName || ""] || ""
@@ -763,33 +766,34 @@ export default function ResumeBuilder() {
                 height: auto;
             }
 
-           .two-column {
-                display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
-                gap: 32px; /* Condensed from 40px */
-                page-break-inside: auto;
-            }
+             .two-column {
+                                                display: flex;
+                                                flex-direction: row;
+                                                flex-wrap: wrap;
+                                                gap: 22px;
+                                                /* Condensed from 40px */
+                                                page-break-inside: auto;
+                                            }
 
-            .two-column > div {
-                flex: 1 1 48%;
-                page-break-inside: auto;
-                break-inside: avoid;
-            }
+                                            .two-column > div {
+                                                flex: 1 1 40%;
+                                                page-break-inside: auto;
+                                                break-inside: avoid;
+                                            }
 
             /* Ensure header columns stay side-by-side in print */
-            .header-main-content {
-              display: grid !important;
-              grid-template-columns: 1fr 1fr;
-              gap: 16px; /* Condensed from 20px */
-              page-break-inside: auto;
-              break-inside: avoid;
-            }
+             .header-main-content {
+                  display: grid !important;
+                  grid-template-columns: 1fr 1fr;
+                  gap: 16px;
+                  /* Condensed from 20px */
+                  page-break-inside: auto;
+                  break-inside: avoid;
+              }
 
-            .header-main-content .left-column,
-            .header-main-content .right-column {
-              display: block !important;
-            }
+              .header-main-content .left-column, .header-main-content .right-column {
+                  display: block !important;
+              }
 
             .job-header {
               display: grid !important;
@@ -803,10 +807,6 @@ export default function ResumeBuilder() {
         }
 
         @media (max-width: 768px) {
-            .two-column {
-                grid-template-columns: 1fr;
-                gap: 24px;
-            }
             
             .job-header {
                 flex-direction: column;
@@ -845,7 +845,7 @@ export default function ResumeBuilder() {
                 <div class="header-left">
                     <h1 class="name">${resumeData.personalInfo.fullName}</h1>
                     ${
-                        verifiedBadgeText
+                      verifiedBadgeText
                         ? `
                     <div class="verified-badge">
                         ${renderLucideIcon(ShieldCheck, "verified-icon", 16)}
@@ -934,7 +934,7 @@ export default function ResumeBuilder() {
             <div class="two-column section">
                 <div>
                     <h2 class="section-title">
-                        ${renderLucideIcon(GraduationCap, "section-icon", 18)}
+                        ${renderLucideIcon(Lightbulb, "section-icon", 18)}
                         Education
                     </h2>
                     ${resumeData.education
@@ -961,8 +961,8 @@ export default function ResumeBuilder() {
                           .filter((exp) => exp.name.trim())
                           .map(
                             (exp) => `
-                            <span class="skill-tag">${exp.name}${exp.years ? ` - ${exp.years} years` : ""}</span>
-                        `,
+                          <span class="skill-tag">${exp.name}${exp.years ? ` - ${exp.years} years` : ""}</span>
+                      `,
                           )
                           .join("")}
                     </div>
@@ -1032,7 +1032,7 @@ export default function ResumeBuilder() {
                 ? `
             <div class="section section-skill">
                 <h2 class="section-title section-underline">
-                    ${renderLucideIcon(Lightbulb, "section-icon", 18)}
+                    ${renderLucideIcon(Sparkles, "section-icon", 18)}
                     Skills
                 </h2>
                 <p class="skills-list-text">
@@ -1048,7 +1048,7 @@ export default function ResumeBuilder() {
                 ? `
             <div class="section">
                 <h2 class="section-title section-underline">
-                    ${renderLucideIcon(Lightbulb, "section-icon", 18)}
+                    ${renderLucideIcon(Award, "section-icon", 18)}
                     Awards & Certificates
                 </h2>
                 ${resumeData.awards
