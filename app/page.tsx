@@ -289,6 +289,20 @@ export default function ResumeBuilder() {
   }
 
   const generateResumeHTML = () => {
+    const formattedSkills = resumeData.skills
+      .split("\n")
+      .map((line) => {
+        const parts = line.split(":")
+        if (parts.length > 1) {
+          const category = parts[0].trim()
+          const skillList = parts.slice(1).join(":").trim()
+          return `<strong>${category}:</strong> ${skillList}`
+        }
+        return line.trim()
+      })
+      .filter((line) => line) // Remove empty lines
+      .join("<br>")
+
     return `
 <!DOCTYPE html>
 <html lang="en">
@@ -330,7 +344,7 @@ export default function ResumeBuilder() {
         .name {
             font-size: 2.5rem;
             font-weight: 900;
-            color: #2563eb;
+            color: #4e7a17;
             margin-bottom: 12px;
             letter-spacing: -0.025em;
         }
@@ -392,7 +406,7 @@ export default function ResumeBuilder() {
         .section-icon {
             width: 18px;
             height: 18px;
-            color: #2563eb;
+            color: #4e7a17;
             flex-shrink: 0;
         }
         
@@ -404,13 +418,13 @@ export default function ResumeBuilder() {
         }
         
         .skill-tag {
-            background: #dbeafe;
-            color: #1d4ed8;
+            background: #e8f5e1;
+            color: #4e7a17;
             padding: 5px 13px; /* Condensed from 6px 16px */
             border-radius: 20px;
             font-size: 0.875rem;
             font-weight: 500;
-            border: 1px solid #bfdbfe;
+            border: 1px solid #c8d9b0;
         }
         
         .bio-text {
@@ -502,10 +516,10 @@ export default function ResumeBuilder() {
             top: 9px;
             width: 10px;
             height: 10px;
-            background: #2563eb;
+            background: #4e7a17;
             border-radius: 50%;
             border: 2px solid white;
-            box-shadow: 0 0 0 2px #2563eb;
+            box-shadow: 0 0 0 2px #4e7a17;
             z-index: 1;
         }
         
@@ -513,20 +527,21 @@ export default function ResumeBuilder() {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 6px; /* Condensed from 8px */
+            margin-bottom: 1px; /* Condensed from 8px */
         }
         
         .job-title {
             font-size: 1.125rem;
             font-weight: 700;
             color: #111827;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
         
         .company-name {
             font-size: 1rem;
-            color: #6b7280;
-            margin-bottom: 12px;
+            font-weight: 700;
+            color: #4e7a17; /* #6b7280 */
+            margin-bottom: 9px;
         }
         
         .job-duration {
@@ -559,7 +574,7 @@ export default function ResumeBuilder() {
             position: absolute;
             left: 0;
             top: 0;
-            color: #2563eb;
+            color: #4e7a17;
             font-weight: bold;
             font-size: 1.2em;
         }
@@ -612,7 +627,7 @@ export default function ResumeBuilder() {
         .education-title {
             font-size: 1.125rem;
             font-weight: 600;
-            color: #2563eb;
+            color: #4e7a17;
             margin-bottom: 4px;
         }
 
@@ -630,8 +645,8 @@ export default function ResumeBuilder() {
         }
 
         .award-item {
-            margin-bottom: 16px; /* Condensed from 20px */
-            padding-bottom: 13px; /* Condensed from 16px */
+            margin-bottom: 12px; /* Condensed from 20px */
+            padding-bottom: 12px; /* Condensed from 16px */
             border-bottom: 1px solid #f3f4f6;
             page-break-inside: auto; /* Prevent individual award entry from breaking */
         }
@@ -650,8 +665,8 @@ export default function ResumeBuilder() {
         .award-title {
             font-size: 1.125rem;
             font-weight: 600;
-            color: #2563eb;
-            margin-bottom: 4px;
+            color: #4e7a17;
+            margin-bottom: 1px;
         }
 
         .award-issuer {
@@ -717,10 +732,10 @@ export default function ResumeBuilder() {
                 top: 9px;
                 width: 10px;
                 height: 10px;
-                background: #2563eb; /* dùng màu đậm để in ra rõ hơn */
+                background: #4e7a17; /* dùng màu đậm để in ra rõ hơn */
                 border-radius: 50%;
                 border: 2px solid white;
-                box-shadow: 0 0 0 1px #2563eb;
+                box-shadow: 0 0 0 1px #4e7a17;
                 z-index: 1;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
@@ -1036,7 +1051,7 @@ export default function ResumeBuilder() {
                     Skills
                 </h2>
                 <p class="skills-list-text">
-                    ${resumeData.skills.replace(/\n/g, "<br>")}
+                    ${formattedSkills}
                 </p>
             </div>
             `
