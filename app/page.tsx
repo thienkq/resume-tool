@@ -344,7 +344,7 @@ export default function ResumeBuilder() {
         .name {
             font-size: 2.5rem;
             font-weight: 900;
-            color: #4e7a17;
+            color: #6cb501;
             margin-bottom: 12px;
             letter-spacing: -0.025em;
         }
@@ -406,7 +406,7 @@ export default function ResumeBuilder() {
         .section-icon {
             width: 18px;
             height: 18px;
-            color: #4e7a17;
+            color: #6cb501;
             flex-shrink: 0;
         }
         
@@ -418,13 +418,13 @@ export default function ResumeBuilder() {
         }
         
         .skill-tag {
-            background: #e8f5e1;
-            color: #4e7a17;
+            background:#f7f7f7;
+            color: #656565;
             padding: 5px 13px; /* Condensed from 6px 16px */
             border-radius: 20px;
             font-size: 0.875rem;
             font-weight: 500;
-            border: 1px solid #c8d9b0;
+            border: 1px solid;
         }
         
         .bio-text {
@@ -516,10 +516,10 @@ export default function ResumeBuilder() {
             top: 9px;
             width: 10px;
             height: 10px;
-            background: #4e7a17;
+            background: #6cb501;
             border-radius: 50%;
             border: 2px solid white;
-            box-shadow: 0 0 0 2px #4e7a17;
+            box-shadow: 0 0 0 2px #6cb501;
             z-index: 1;
         }
         
@@ -540,7 +540,7 @@ export default function ResumeBuilder() {
         .company-name {
             font-size: 1rem;
             font-weight: 700;
-            color: #4e7a17; /* #6b7280 */
+            color: #6cb501; /* #6b7280 */
             margin-bottom: 9px;
         }
         
@@ -574,9 +574,8 @@ export default function ResumeBuilder() {
             position: absolute;
             left: 0;
             top: 0;
-            color: #4e7a17;
             font-weight: bold;
-            font-size: 1.2em;
+            font-size: 1.0em;
         }
         
         .job-description p {
@@ -627,7 +626,7 @@ export default function ResumeBuilder() {
         .education-title {
             font-size: 1.125rem;
             font-weight: 600;
-            color: #4e7a17;
+            color: #6cb501;
             margin-bottom: 4px;
         }
 
@@ -665,7 +664,6 @@ export default function ResumeBuilder() {
         .award-title {
             font-size: 1.125rem;
             font-weight: 600;
-            color: #4e7a17;
             margin-bottom: 1px;
         }
 
@@ -732,10 +730,10 @@ export default function ResumeBuilder() {
                 top: 9px;
                 width: 10px;
                 height: 10px;
-                background: #4e7a17; /* dùng màu đậm để in ra rõ hơn */
+                background: #6cb501; /* dùng màu đậm để in ra rõ hơn */
                 border-radius: 50%;
                 border: 2px solid white;
-                box-shadow: 0 0 0 1px #4e7a17;
+                box-shadow: 0 0 0 1px #6cb501;
                 z-index: 1;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
@@ -989,7 +987,7 @@ export default function ResumeBuilder() {
                 ? `
             <div class="work-experience section">
                 <div class="work-header section-underline">
-                    <h2 class="work-title">
+                    <h2 class="section-title">
                         ${renderLucideIcon(Briefcase, "section-icon", 18)}
                         Work Experience
                     </h2>
