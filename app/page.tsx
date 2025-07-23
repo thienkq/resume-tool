@@ -119,7 +119,7 @@ export default function ResumeBuilder() {
   // Experience handlers
   const addExperience = () => {
     const newExp: Experience = {
-      id: Date.now().toString(),
+      id: `exp-${Math.random().toString(36).substr(2, 9)}`,
       company: "",
       position: "",
       duration: "",
@@ -151,7 +151,7 @@ export default function ResumeBuilder() {
   // Education handlers
   const addEducation = () => {
     const newEdu: Education = {
-      id: Date.now().toString(),
+      id: `edu-${Math.random().toString(36).substr(2, 9)}`,
       institution: "",
       degree: "",
       year: "",
@@ -182,7 +182,7 @@ export default function ResumeBuilder() {
   const addExpertise = () => {
     setResumeData(prev => ({
       ...prev,
-      expertise: [...prev.expertise, { id: Date.now().toString(), name: "", years: "" }],
+      expertise: [...prev.expertise, { id: `skill-${Math.random().toString(36).substr(2, 9)}`, name: "", years: "" }],
     }))
   }
 
@@ -205,7 +205,7 @@ export default function ResumeBuilder() {
   // Awards handlers
   const addAward = () => {
     const newAward: Award = {
-      id: Date.now().toString(),
+      id: `award-${Math.random().toString(36).substr(2, 9)}`,
       title: "",
       issuer: "",
       year: "",
@@ -260,12 +260,46 @@ export default function ResumeBuilder() {
     setJsonInput(JSON.stringify(resumeData, null, 2))
   }
 
-  // Export handler (placeholder)
+  // Export handler
   const exportToPDF = () => {
-    toast({
-      title: "Export",
-      description: "PDF export functionality will be implemented soon!",
-    })
+    if (typeof window !== 'undefined') {
+      // Use window.print() which is more reliable than opening new windows
+      const originalTitle = document.title
+      document.title = `${resumeData.personalInfo.fullName} - Resume`
+      
+      // Hide everything except the resume preview
+      const resumeElement = previewRef.current
+      if (resumeElement) {
+        // Create print styles
+        const printStyles = document.createElement('style')
+        printStyles.textContent = `
+          @media print {
+            body * { visibility: hidden; }
+            .print-area, .print-area * { visibility: visible; }
+            .print-area { position: absolute; left: 0; top: 0; width: 100%; }
+            body { margin: 0; padding: 20px; }
+            .no-print { display: none !important; }
+          }
+        `
+        document.head.appendChild(printStyles)
+        
+        // Add print class to resume
+        resumeElement.classList.add('print-area')
+        
+        // Trigger print
+        window.print()
+        
+        // Cleanup
+        document.head.removeChild(printStyles)
+        resumeElement.classList.remove('print-area')
+        document.title = originalTitle
+        
+        toast({
+          title: "Print Dialog Opened",
+          description: "Choose 'Save as PDF' to download your resume.",
+        })
+      }
+    }
   }
 
   return (
@@ -358,7 +392,7 @@ export default function ResumeBuilder() {
 
             {/* Right Column - Preview */}
             <div className="lg:sticky lg:top-8 lg:h-fit">
-              <TabsContent value="preview" className="mt-0 lg:hidden">
+              <TabsContent value="preview" className="mt-0">
                 <ResumePreview
                   ref={previewRef}
                   resumeData={resumeData}
@@ -367,10 +401,9 @@ export default function ResumeBuilder() {
                 />
               </TabsContent>
               
-              {/* Always visible preview on desktop */}
-              <div className="hidden lg:block">
+              {/* Always visible preview on desktop when not on preview tab */}
+              <div className={`${activeTab === 'preview' ? 'hidden' : 'hidden lg:block'}`}>
                 <ResumePreview
-                  ref={previewRef}
                   resumeData={resumeData}
                   verifiedBadgeText={verifiedBadgeText}
                   professionalTitle={professionalTitle}
