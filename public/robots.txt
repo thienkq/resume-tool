@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://resume-builder.vercel.app/sitemap.xml
+
+# Disallow admin or sensitive paths if any
+# Disallow: /admin
+# Disallow: /api/
+
+# Allow resume building functionality
+Allow: /
+Allow: /print
+Allow: /print-pdf
