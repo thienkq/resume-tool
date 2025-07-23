@@ -260,43 +260,41 @@ export default function ResumeBuilder() {
     setJsonInput(JSON.stringify(resumeData, null, 2))
   }
 
-  // Export handler
+  // Export handler - Use print page approach for better styling
   const exportToPDF = () => {
     if (typeof window !== 'undefined') {
-      // Use window.print() which is more reliable than opening new windows
-      const originalTitle = document.title
-      document.title = `${resumeData.personalInfo.fullName} - Resume`
-      
-      // Hide everything except the resume preview
-      const resumeElement = previewRef.current
-      if (resumeElement) {
-        // Create print styles
-        const printStyles = document.createElement('style')
-        printStyles.textContent = `
-          @media print {
-            body * { visibility: hidden; }
-            .print-area, .print-area * { visibility: visible; }
-            .print-area { position: absolute; left: 0; top: 0; width: 100%; }
-            body { margin: 0; padding: 20px; }
-            .no-print { display: none !important; }
-          }
-        `
-        document.head.appendChild(printStyles)
+      try {
+        // Store data in localStorage 
+        const printData = {
+          resumeData,
+          verifiedBadgeText,
+          professionalTitle,
+          timestamp: Date.now()
+        }
         
-        // Add print class to resume
-        resumeElement.classList.add('print-area')
+        localStorage.setItem('resumePrintData', JSON.stringify(printData))
         
-        // Trigger print
-        window.print()
+        // Open print page
+        const printWindow = window.open('/print', '_blank')
         
-        // Cleanup
-        document.head.removeChild(printStyles)
-        resumeElement.classList.remove('print-area')
-        document.title = originalTitle
-        
+        if (printWindow) {
+          toast({
+            title: "Print Page Opened",
+            description: "Use Cmd+P (Mac) or Ctrl+P (Windows), then 'Save as PDF' with no headers/footers.",
+          })
+        } else {
+          toast({
+            title: "Popup Blocked",
+            description: "Please allow popups and try again.",
+            variant: "destructive",
+          })
+        }
+      } catch (error) {
+        console.error('Error opening print page:', error)
         toast({
-          title: "Print Dialog Opened",
-          description: "Choose 'Save as PDF' to download your resume.",
+          title: "Error",
+          description: "Could not open print page. Please try again.",
+          variant: "destructive",
         })
       }
     }
@@ -394,7 +392,7 @@ export default function ResumeBuilder() {
             <div className="lg:sticky lg:top-8 lg:h-fit">
               <TabsContent value="preview" className="mt-0">
                 <ResumePreview
-                  ref={previewRef}
+                  ref={activeTab === 'preview' ? previewRef : null}
                   resumeData={resumeData}
                   verifiedBadgeText={verifiedBadgeText}
                   professionalTitle={professionalTitle}
@@ -404,6 +402,7 @@ export default function ResumeBuilder() {
               {/* Always visible preview on desktop when not on preview tab */}
               <div className={`${activeTab === 'preview' ? 'hidden' : 'hidden lg:block'}`}>
                 <ResumePreview
+                  ref={activeTab !== 'preview' ? previewRef : null}
                   resumeData={resumeData}
                   verifiedBadgeText={verifiedBadgeText}
                   professionalTitle={professionalTitle}
