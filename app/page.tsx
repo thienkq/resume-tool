@@ -5,7 +5,13 @@ import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/hooks/use-toast"
-import { Download } from "lucide-react"
+import { Download, ChevronDown, FileText, Printer } from "lucide-react"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 // Import types
 import { ResumeData, Experience, Education, Skill, Award } from "@/lib/types"
@@ -300,6 +306,54 @@ export default function ResumeBuilder() {
     }
   }
 
+  // High-quality PDF download using Playwright
+  const downloadPDF = async () => {
+    try {
+      toast({
+        title: "Generating PDF...",
+        description: "Please wait while we create your PDF.",
+      })
+
+      const response = await fetch('/api/pdf', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          resumeData,
+          verifiedBadgeText,
+          professionalTitle
+        })
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to generate PDF')
+      }
+
+      const blob = await response.blob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = 'resume.pdf'
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      URL.revokeObjectURL(url)
+
+      toast({
+        title: "PDF Downloaded",
+        description: "Your resume has been saved as PDF.",
+      })
+    } catch (error) {
+      console.error('Error downloading PDF:', error)
+      toast({
+        title: "Error",
+        description: "Failed to generate PDF. Please try again.",
+        variant: "destructive",
+      })
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
@@ -316,10 +370,25 @@ export default function ResumeBuilder() {
               <TabsTrigger value="preview">Preview</TabsTrigger>
             </TabsList>
             
-            <Button onClick={exportToPDF} className="flex items-center gap-2">
-              <Download className="w-4 h-4" />
-              Export PDF
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button className="flex items-center gap-2">
+                  <Download className="w-4 h-4" />
+                  Export PDF
+                  <ChevronDown className="w-4 h-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={downloadPDF}>
+                  <FileText className="w-4 h-4 mr-2" />
+                  Download PDF (High Quality)
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={exportToPDF}>
+                  <Printer className="w-4 h-4 mr-2" />
+                  Print to PDF (Browser)
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
