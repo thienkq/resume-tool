@@ -74,10 +74,10 @@ export default function ResumeBuilder() {
     personalInfo: {
       fullName: "Jane Doe",
       email: "jane.doe@example.com",
-      phone: "+1 (123) 456-7890",
       location: "San Francisco, CA",
       website: "https://janedoe.dev",
       github: "https://github.com/janedoe", // Default for github
+      phone: "+1 (123) 456-7890",
     },
     professionalSummary:
       "Highly motivated and results-oriented Software Engineer with 5+ years of experience in developing and deploying scalable web applications. Proficient in full-stack development, cloud platforms, and agile methodologies. Passionate about building innovative solutions and contributing to high-performing teams.",
@@ -338,7 +338,7 @@ export default function ResumeBuilder() {
         .header {
             background: white;
             padding: 32px; /* Condensed from 40px */
-            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 0;
         }
         
         .name {
@@ -596,17 +596,60 @@ export default function ResumeBuilder() {
         
         .header-content {
             display: flex;
+            flex-direction: column;
+            gap: 8px;
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header-top {
+            display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: center;
+            gap: 12px;
+            margin: 0;
+            padding: 0;
         }
 
-        .header-left {
-            flex: 1;
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .company-logo {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
         }
 
-        .header-right {
-            flex-shrink: 0;
-            margin-left: 40px;
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            color: #4b5563;
+            font-size: 0.9375rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .contact-info .info-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin: 0;
+            padding: 0;
+            border: none;
+        }
+
+        .contact-info .info-icon {
+            width: 16px;
+            height: 16px;
+            color: #6b7280;
         }
 
         .company-logo {
@@ -855,76 +898,63 @@ export default function ResumeBuilder() {
     <div class="container">
         <div class="header">
             <div class="header-content">
-                <div class="header-left">
-                    <h1 class="name">${resumeData.personalInfo.fullName}</h1>
-                    ${
-                      verifiedBadgeText
-                        ? `
-                    <div class="verified-badge">
-                        ${renderLucideIcon(ShieldCheck, "verified-icon", 16)}
-                        ${verifiedBadgeText}
-                    </div>
-                     `
-                        : ""
-                    }
-                    
-                    <div class="header-main-content">
-                        <div class="left-column">
-                            <div class="info-item">
-                                ${renderLucideIcon(Code, "info-icon", 18)}
-                                <span>${professionalTitle}</span>
-                            </div>
-                            ${
-                              resumeData.personalInfo.email
-                                ? `
-                            <div class="info-item">
-                                ${renderLucideIcon(Mail, "info-icon", 18)}
-                                <span>${resumeData.personalInfo.email}</span>
-                            </div>
-                            `
-                                : ""
-                            }
-                            ${
-                              resumeData.personalInfo.phone
-                                ? `
-                            <div class="info-item">
-                                ${renderLucideIcon(Phone, "info-icon", 18)}
-                                <span>${resumeData.personalInfo.phone}</span>
-                            </div>
-                            `
-                                : ""
-                            }
+                <div class="header-top">
+                    <div class="header-title">
+                        <h1 class="name">${resumeData.personalInfo.fullName}</h1>
+                        ${
+                          verifiedBadgeText
+                            ? `
+                        <div class="verified-badge">
+                            ${renderLucideIcon(ShieldCheck, "verified-icon", 16)}
                         </div>
-                        <div class="right-column">
-                            ${
-                              resumeData.personalInfo.location
-                                ? `
-                            <div class="info-item">
-                                ${renderLucideIcon(MapPin, "info-icon", 18)}
-                                <span>${resumeData.personalInfo.location}</span>
-                            </div>
-                            `
-                                : ""
-                            }
-                            ${
-                              resumeData.personalInfo.website
-                                ? `
-                            <div class="info-item">
-                                ${renderLucideIcon(Globe, "info-icon", 18)}
-                                <a href="${resumeData.personalInfo.website}" target="_blank" rel="noopener noreferrer">${resumeData.personalInfo.website}</a>
-                            </div>
-                            `
-                                : ""
-                            }
-                            
-                        </div>
+                         `
+                            : ""
+                        }
                     </div>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQ7oW6XvR5vf46b40SEVtBgza4AV_5X1LqRA&s" alt="CoderPush Logo" class="company-logo">
                 </div>
                 
-                <div class="header-right">
-                    <div class="company-logo">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQ7oW6XvR5vf46b40SEVtBgza4AV_5X1LqRA&s" alt="Company Logo" style="height: 50px;">
-                    </div>
+                <div class="contact-info">
+                    ${
+                      professionalTitle
+                        ? `
+                        <div class="info-item">
+                            ${renderLucideIcon(Code, "info-icon", 16)}
+                            <span>${professionalTitle}</span>
+                        </div>
+                        `
+                        : ""
+                    }
+                    ${
+                      resumeData.personalInfo.location
+                        ? `
+                        <div class="info-item">
+                            ${renderLucideIcon(MapPin, "info-icon", 16)}
+                            <span>${resumeData.personalInfo.location}</span>
+                        </div>
+                        `
+                        : ""
+                    }
+                    ${
+                      resumeData.personalInfo.email
+                        ? `
+                        <div class="info-item">
+                            ${renderLucideIcon(Mail, "info-icon", 16)}
+                            <span>${resumeData.personalInfo.email}</span>
+                        </div>
+                        `
+                        : ""
+                    }
+                    ${
+                      resumeData.personalInfo.phone
+                        ? `
+                        <div class="info-item">
+                            ${renderLucideIcon(Phone, "info-icon", 16)}
+                            <span>${resumeData.personalInfo.phone}</span>
+                        </div>
+                        `
+                        : ""
+                    }
                 </div>
             </div>
         </div>
